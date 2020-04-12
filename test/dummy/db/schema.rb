@@ -13,17 +13,17 @@
 ActiveRecord::Schema.define(version: 2020_04_12_131756) do
 
   create_table "sequenced_current_sequences", force: :cascade do |t|
-    t.string "name"
-    t.integer "current"
-    t.string "scope"
+    t.string "name", null: false
+    t.integer "current", default: 1, null: false
+    t.string "scope", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "sequenced_sequences", force: :cascade do |t|
-    t.string "name"
-    t.string "scope"
-    t.string "purpose"
+    t.string "name", null: false
+    t.string "scope", null: false
+    t.string "purpose", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
