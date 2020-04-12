@@ -1,4 +1,4 @@
-# Sequenced
+# SequenceGenerator
 Short description and motivation.
 
 ## Usage
@@ -8,7 +8,7 @@ How to use my plugin.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'sequenced'
+gem 'sequence_generator'
 ```
 
 And then execute:
@@ -18,8 +18,10 @@ $ bundle
 
 Or install it yourself as:
 ```bash
-$ gem install sequenced
+$ gem install sequence_generator
 ```
+
+rails sequence_generator:install:migrations
 
 ## Contributing
 Contribution directions go here.

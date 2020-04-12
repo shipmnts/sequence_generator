@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2020_04_12_133917) do
 
-  create_table "sequenced_current_sequences", force: :cascade do |t|
+  create_table "sequence_generator_current_sequences", force: :cascade do |t|
     t.string "name", null: false
     t.integer "current", default: 1, null: false
     t.string "scope", null: false
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2020_04_12_133917) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "sequenced_sequences", force: :cascade do |t|
+  create_table "sequence_generator_sequences", force: :cascade do |t|
     t.string "name", null: false
     t.string "scope", null: false
     t.string "purpose", null: false

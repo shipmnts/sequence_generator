@@ -1,11 +1,11 @@
-module Sequenced
+module SequenceGenerator
   module Extender
 
-    def acts_as_sequenced(options = {})
-      include Sequenced::Generator
+    def acts_as_sequence_generator(options = {})
+      include SequenceGenerator::Generator
 
       [:purpose, :scope, :column].each do |option|
-        raise StandardError.new("#{option} option needs to be provided to acts_as_sequenced") unless options[option].present?
+        raise StandardError.new("#{option} option needs to be provided to acts_as_sequence_generator") unless options[option].present?
       end
 
       options[:validation_options] ||= {on: :create}
@@ -28,7 +28,7 @@ module Sequenced
 end
 
 
-## Tests  to be written ##
+## TODO: Tests  to be written ##
 
 # Same model multiple sequence
 # validation options... on create, update

@@ -1,4 +1,4 @@
-module Sequenced
+module SequenceGenerator
   class ApplicationController < ActionController::API
     rescue_from ActiveRecord::RecordNotFound, with: :resource_not_found
     rescue_from ActionController::ParameterMissing, with: :parameter_missing

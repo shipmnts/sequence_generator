@@ -1,7 +1,7 @@
 require 'test_helper'
 
-module Sequenced
-  class CurrentSequenceTest < ActiveSupport::TestCase
+module SequenceGenerator
+  class SequenceTest < ActiveSupport::TestCase
     # test "the truth" do
     #   assert true
     # end

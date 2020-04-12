@@ -1,3 +1,3 @@
 Rails.application.routes.draw do
-  mount Sequenced::Engine => "/sequenced"
+  mount SequenceGenerator::Engine => "/sequence_generator"
 end

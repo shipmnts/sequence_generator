@@ -1,10 +1,10 @@
-module Sequenced
+module SequenceGenerator
   class SequencesController < ApplicationController
     around_action :transactions_filter, only: %i[create]
 
 
     def create
-      sequence = ::Sequenced::Sequence.new(create_sequence_params)
+      sequence = ::SequenceGenerator::Sequence.new(create_sequence_params)
       if sequence.save
         render json: sequence
       else
@@ -16,12 +16,12 @@ module Sequenced
 
     def get
       return unless valid_params?(params, [:id])
-      render json: ::Sequenced::Sequence.find(params[:id])
+      render json: ::SequenceGenerator::Sequence.find(params[:id])
     end
 
     def index
       return unless valid_params?(params, [:scope, :purpose])
-      sequences = ::Sequenced::Sequence.where(scope: params[:scope], purpose: params[:purpose])
+      sequences = ::SequenceGenerator::Sequence.where(scope: params[:scope], purpose: params[:purpose])
       render json: sequences, status: :ok
     end
 

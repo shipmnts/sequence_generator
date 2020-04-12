@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sequenced (0.1.0)
+    sequence_generator (1.0.0)
       rails (~> 6.0.2, >= 6.0.2.2)
 
 GEM
@@ -136,7 +136,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  sequenced!
+  sequence_generator!
   sqlite3
 
 BUNDLED WITH

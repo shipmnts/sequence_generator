@@ -1,17 +1,17 @@
 $:.push File.expand_path("lib", __dir__)
 
 # Maintain your gem's version:
-require "sequenced/version"
+require "sequence_generator/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
   spec.name        = "sequence_generator"
-  spec.version     = Sequenced::VERSION
+  spec.version     = SequenceGenerator::VERSION
   spec.authors     = ["Prasann Shah"]
   spec.email       = ["prasann@shipmnts.com"]
-  spec.homepage    = ""
-  spec.summary     = ""
-  spec.description = ""
+  spec.homepage    = "https://github.com/shipmnts/sequence_generator"
+  spec.summary     = "Generate sequences formatted as a string for the users"
+  spec.description = "Formatted sequence for rails models with unique scope"
   spec.license     = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
