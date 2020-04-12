@@ -5,7 +5,7 @@ require "sequenced/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
-  spec.name        = "sequenced"
+  spec.name        = "sequence_generator"
   spec.version     = Sequenced::VERSION
   spec.authors     = ["Prasann Shah"]
   spec.email       = ["prasann@shipmnts.com"]

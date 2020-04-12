@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_12_131756) do
+ActiveRecord::Schema.define(version: 2020_04_12_133917) do
 
   create_table "sequenced_current_sequences", force: :cascade do |t|
     t.string "name", null: false
@@ -24,6 +24,13 @@ ActiveRecord::Schema.define(version: 2020_04_12_131756) do
     t.string "name", null: false
     t.string "scope", null: false
     t.string "purpose", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "some_models", force: :cascade do |t|
+    t.string "name"
+    t.integer "tenant_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

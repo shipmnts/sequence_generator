@@ -1,5 +1,8 @@
 require "sequenced/engine"
 
 module Sequenced
-  # Your code goes here...
+  if defined?(ActiveRecord::Base)
+    require "sequenced/extender"
+    ActiveRecord::Base.extend Sequenced::Extender
+  end
 end
