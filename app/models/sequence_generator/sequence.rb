@@ -16,10 +16,20 @@ module SequenceGenerator
           date_to_consider.strftime('%Y')
         when "YY"
           date_to_consider.strftime('%y')
-        when "NYYY"
-          date_to_consider.next_year.strftime('%Y')
-        when "NY"
-          date_to_consider.next_year.strftime('%y')
+        when "IFYY"
+          financial_year_start_date = DateTime.new(date_to_consider.year, 4, 1, 0, 0, 0, Rational(5.5,24))
+          if date_to_consider > financial_year_start_date
+            "#{date_to_consider.strftime('%y')}-#{date_to_consider.next_year.strftime('%y')}"
+          else
+            "#{date_to_consider.prev_year.strftime('%y')}-#{date_to_consider.strftime('%y')}"
+          end
+        when "IFY"
+          financial_year_start_date = DateTime.new(date_to_consider.year, 4, 1, 0, 0, 0, Rational(5.5,24))
+          if date_to_consider > financial_year_start_date
+            "#{date_to_consider.strftime('%y')}#{date_to_consider.next_year.strftime('%y')}"
+          else
+            "#{date_to_consider.prev_year.strftime('%y')}#{date_to_consider.strftime('%y')}"
+          end
         when "MM"
           date_to_consider.strftime('%m')
         else
