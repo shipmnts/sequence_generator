@@ -40,7 +40,7 @@ module SequenceGenerator
       prefix = prefix[/#*$/] == "" ? prefix + "#####" : prefix
       digits = prefix[/#*$/].length
       prefix_without_digits = prefix.split(/#*$/)[0]
-      next_number = CurrentSequence.get_next_number(prefix_without_digits, scope)
+      next_number = CurrentSequence.get_next_number(prefix_without_digits, scope, purpose)
       sequence_number = "%0#{digits}d" % (next_number).to_s
       prefix_without_digits + sequence_number
     end
