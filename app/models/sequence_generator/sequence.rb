@@ -37,12 +37,12 @@ module SequenceGenerator
         end
       end
 
-      prefix = prefix[/#*$/] == "" ? prefix + "#####" : prefix
-      digits = prefix[/#*$/].length
-      prefix_without_digits = prefix.split(/#*$/)[0]
+      prefix = !prefix[/#+/] ? prefix + "#####" : prefix
+      digits = prefix[/#+/].length
+      prefix_without_digits, suffix = prefix.split(/#+/)
       next_number = CurrentSequence.get_next_number(prefix_without_digits, scope, purpose)
       sequence_number = "%0#{digits}d" % (next_number).to_s
-      prefix_without_digits + sequence_number
+      prefix_without_digits + sequence_number + (suffix || '')
     end
   end
 end
