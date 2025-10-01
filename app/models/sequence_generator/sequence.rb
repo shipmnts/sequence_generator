@@ -9,40 +9,62 @@ module SequenceGenerator
         date_to_consider = model.send(options[:date_column])
       end
 
-      prefix = name.gsub(/\([^()]*?\)/) do |x|
+      prefix = name.gsub(/[\(\{][^(){}]*?[\)\}]/) do |x|
+        fragment = x[1..-2] # strip () or {}
+        resolve_fragment(fragment, model, date_to_consider)
+      end
+
+      # Build sequence-driving prefix (only () fields)
+      sequence_prefix = name.gsub(/[\(\{][^(){}]*?[\)\}]/) do |x|
         fragment = x[1..-2]
-        case fragment
-        when "YYYY"
-          date_to_consider.strftime('%Y')
-        when "YY"
-          date_to_consider.strftime('%y')
-        when "IFYY"
-          financial_year_start_date = DateTime.new(date_to_consider.year, 4, 1, 0, 0, 0, Rational(5.5,24))
-          if date_to_consider > financial_year_start_date
-            "#{date_to_consider.strftime('%y')}-#{date_to_consider.next_year.strftime('%y')}"
-          else
-            "#{date_to_consider.prev_year.strftime('%y')}-#{date_to_consider.strftime('%y')}"
-          end
-        when "IFY"
-          financial_year_start_date = DateTime.new(date_to_consider.year, 4, 1, 0, 0, 0, Rational(5.5,24))
-          if date_to_consider > financial_year_start_date
-            "#{date_to_consider.strftime('%y')}#{date_to_consider.next_year.strftime('%y')}"
-          else
-            "#{date_to_consider.prev_year.strftime('%y')}#{date_to_consider.strftime('%y')}"
-          end
-        when "MM"
-          date_to_consider.strftime('%m')
+        if x.start_with?("(")
+          resolve_fragment(fragment, model, date_to_consider)
         else
-          model.send(fragment)
+          ""
         end
       end
 
+
+      # Handle numeric padding
       prefix = !prefix[/#+/] ? prefix + "#####" : prefix
       digits = prefix[/#+/].length
       prefix_without_digits, suffix = prefix.split(/#+/)
-      next_number = CurrentSequence.get_next_number(prefix_without_digits, scope, purpose)
+      sequence_prefix_without_digits, sequence_suffix = sequence_prefix.split(/#+/)
+
+      # Use only sequence-driving prefix for lookup
+      next_number = CurrentSequence.get_next_number(sequence_prefix_without_digits, scope, purpose)
+
       sequence_number = "%0#{digits}d" % (next_number).to_s
       prefix_without_digits + sequence_number + (suffix || '')
+    end
+
+    def resolve_fragment(fragment, model, date_to_consider)
+      case fragment
+      when "YYYY"
+        date_to_consider.strftime('%Y')
+      when "YY"
+        date_to_consider.strftime('%y')
+      when "IFYY"
+        fy_start = DateTime.new(date_to_consider.year, 4, 1, 0, 0, 0, Rational(5.5,24))
+        if date_to_consider > fy_start
+          "#{date_to_consider.strftime('%y')}-#{date_to_consider.next_year.strftime('%y')}"
+        else
+          "#{date_to_consider.prev_year.strftime('%y')}-#{date_to_consider.strftime('%y')}"
+        end
+      when "IFY"
+        fy_start = DateTime.new(date_to_consider.year, 4, 1, 0, 0, 0, Rational(5.5,24))
+        if date_to_consider > fy_start
+          "#{date_to_consider.strftime('%y')}#{date_to_consider.next_year.strftime('%y')}"
+        else
+          "#{date_to_consider.prev_year.strftime('%y')}#{date_to_consider.strftime('%y')}"
+        end
+      when "MM"
+        date_to_consider.strftime('%m')
+      when "/"
+        "/"
+      else
+        model.send(fragment)
+      end
     end
   end
 end
