@@ -221,6 +221,29 @@ module SequenceGenerator
           assert_match(/\d{5}$/, result)
           assert result.end_with?("00001")
         end
+
+        test "should add default padding when no hash symbols present" do
+          @sequence.name = "INV-(YYYY)"
+          @sequence.save!
+          
+          model = mock_model
+          result = @sequence.generate_next({}, model)
+          
+          # Should automatically add 5 hash symbols (default padding)
+          assert_match(/^INV-\d{4}\d{5}$/, result)
+          assert result.end_with?("00001")
+        end
+
+        test "should handle hash symbols before placeholders" do
+          @sequence.name = "INV#####SWL"
+          @sequence.save!
+          
+          model = mock_model
+          result = @sequence.generate_next({}, model)
+          
+          assert_match(/^INV\d{5}SWL$/, result)
+          assert result.end_with?("00001SWL")
+        end
       end
       
 
