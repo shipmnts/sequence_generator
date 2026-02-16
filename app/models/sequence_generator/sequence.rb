@@ -32,12 +32,8 @@ module SequenceGenerator
       sequence_prefix_without_digits, sequence_suffix = sequence_prefix.split(/#+/)
 
       # Use only sequence-driving prefix for lookup
-      if options[:override_sequence_number].present?
-        sequence_number = options[:override_sequence_number]
-      else
-        next_number = CurrentSequence.get_next_number(sequence_prefix_without_digits, scope, purpose)
-        sequence_number = "%0#{digits}d" % (next_number).to_s
-      end
+      next_number = options[:next_number] || CurrentSequence.get_next_number(sequence_prefix_without_digits, scope, purpose)
+      sequence_number = "%0#{digits}d" % (next_number).to_s
       prefix_without_digits + sequence_number + (suffix || '')
     end
 
