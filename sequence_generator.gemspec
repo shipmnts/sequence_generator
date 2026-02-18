@@ -3,6 +3,14 @@ $:.push File.expand_path("lib", __dir__)
 # Maintain your gem's version:
 require "sequence_generator/version"
 
+# 🚨 Run tests before building the gem
+if $PROGRAM_NAME.end_with?("gem") # only when running `gem build`
+  puts "👉 Running tests before building gem..."
+  unless system("bundle exec rake test")
+    abort("❌ Tests failed! Aborting gem build.")
+  end
+end
+
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |spec|
   spec.name        = "sequence_generator"
