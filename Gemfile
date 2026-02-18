@@ -13,3 +13,8 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
+
+group :development, :test do
+  gem "minitest-spec-rails"
+  gem "sqlite3", "~> 1.4"
+end
