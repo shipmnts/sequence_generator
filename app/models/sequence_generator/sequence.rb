@@ -57,6 +57,13 @@ module SequenceGenerator
         else
           "#{date_to_consider.prev_year.strftime('%y')}#{date_to_consider.strftime('%y')}"
         end
+      when "IFYN"
+        fy_start = DateTime.new(date_to_consider.year, 4, 1, 0, 0, 0, Rational(5.5,24))
+        if date_to_consider > fy_start
+          "#{date_to_consider.next_year.strftime('%y')}"
+        else
+          "#{date_to_consider.strftime('%y')}"
+        end
       when "MM"
         date_to_consider.strftime('%m')
       when "/"
