@@ -129,6 +129,36 @@ module SequenceGenerator
         result = @sequence.resolve_fragment("IFY", mock_model, date)
         assert_equal "2324", result
       end
+
+      it "returns IFYS as FY start year after April 1st" do
+        date = Time.new(2026, 10, 1)
+        result = @sequence.resolve_fragment("IFYS", mock_model, date)
+        assert_equal "26", result
+      end
+
+      it "returns IFYS as previous year before April 1st" do
+        date = Time.new(2027, 3, 31, 23, 59, 59, "+05:30")
+        result = @sequence.resolve_fragment("IFYS", mock_model, date)
+        assert_equal "26", result
+      end
+
+      it "handles IFYS April 1st boundary" do
+        date = Time.new(2027, 4, 1, 6, 0, 0)
+        result = @sequence.resolve_fragment("IFYS", mock_model, date)
+        assert_equal "27", result
+      end
+
+      it "returns IFYS using IST when given a UTC time" do
+        # 2027-03-31 19:00 UTC is 2027-04-01 00:30 IST
+        date = Time.utc(2027, 3, 31, 19, 0, 0)
+        result = @sequence.resolve_fragment("IFYS", mock_model, date)
+        assert_equal "27", result
+      end
+
+      it "returns IFYS for a Date value" do
+        result = @sequence.resolve_fragment("IFYS", mock_model, Date.new(2027, 1, 15))
+        assert_equal "26", result
+      end
     end
 
     describe "Generate Next" do
